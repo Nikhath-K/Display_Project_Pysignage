@@ -39,8 +39,8 @@ class LMSdisplayApp(QWidget):
         # Door Status Label
         self.door_status_label = QLabel(self)  # Default text
         self.door_status_label.setStyleSheet("background-color: white; border: none;")
-        self.door_status_label.setFixedSize(50, 50)  # Width: 50px, Height: 50px
-        self.door_status_label.move(175, 400)  # Position the door status label (adjust coordinates)
+        self.door_status_label.setFixedSize(300, 300)  # Width: 50px, Height: 50px
+        # self.door_status_label.move(175, 400)  # Position the door status label (adjust coordinates)
         
         
         
@@ -50,11 +50,16 @@ class LMSdisplayApp(QWidget):
         # Load the up arrow GIF and set it as the current movie
         self.up_arrow_movie = QMovie("up_arrow.gif")  # Load your up arrow GIF file
         self.down_arrow_movie = QMovie("down_arrow.gif")  
+        
+        # Scale the GIF to fit the desired size
+        self.up_arrow_movie.setScaledSize(QSize(450, 350))
+        self.down_arrow_movie.setScaledSize(QSize(450, 350))
+        
         self.arrow_label.setMovie(self.up_arrow_movie)
         self.arrow_label.setStyleSheet("border: 3px solid white;")  # Add a white border
-        self.arrow_label.setFixedSize(350, 450)  # Width: 150px, Height: 150px
+        self.arrow_label.setFixedSize(350, 350)  # Width: 150px, Height: 150px
         self.arrow_label.setAlignment(Qt.AlignCenter)  # Center the arrow
-        self.arrow_label.move(100, 50)  # Position the arrow (adjust coordinates)
+        # self.arrow_label.move(100, 50)  # Position the arrow (adjust coordinates)
 
         
         
@@ -63,7 +68,7 @@ class LMSdisplayApp(QWidget):
         # Set the font for the floor number
         self.floor_label.setStyleSheet("font-size: 300px; font-family: 'Nothing Font (5x7)'; color: white; border: 3px solid white; ")
         self.floor_label.setFixedSize(350, 350)  # Width: 200px, Height: 150px
-        self.floor_label.move(100, 220)  # Position the floor label (adjust coordinates)
+        # self.floor_label.move(100, 220)  # Position the floor label (adjust coordinates)
         
         
         # Create a frame for the border below the company name
@@ -153,7 +158,7 @@ class LMSdisplayApp(QWidget):
         door_status = self.controller.techno_get_door_status()
         if door_status == "open":
             self.door_status_label.setText("")  # Clear any text
-            self.door_status_label.setFixedSize(50, 50)  # Set a fixed size for the label (square)
+            self.door_status_label.setFixedSize(100, 100)  # Set a fixed size for the label (square)
             self.door_status_label.setStyleSheet("background-color: white; border: none;")  # Display a white box
         elif door_status == "closed":
             self.door_status_label.clear()  # Clear both text and styles
