@@ -5,7 +5,7 @@ from techno_modbus_controller import TechnoModbusLiftController
 techno_lift_controller = TechnoModbusLiftController()
 
 # Step 2: Set the COM port
-techno_com_port = "COM2"
+techno_com_port = "COM4"
 connection_success = techno_lift_controller.techno_set_com_port(techno_com_port)
 
 if connection_success:

@@ -7,6 +7,7 @@ class TechnoModbusLiftController:
         self.techno_com_port = None
         self.techno_floor_count = 23
         self.techno_slave_id = 1  # Default slave ID
+        self.floor_numebr = None
 
     # 1. Sets the RS485 USB COM port
     def techno_set_com_port(self, port: str) -> bool:
@@ -35,7 +36,10 @@ class TechnoModbusLiftController:
         if not self.techno_client or not self.techno_client.connect():
             return -1
         try:
-            techno_response = self.techno_client.read_holding_registers(0x00021, 1, unit=self.techno_slave_id)
+            techno_response = self.techno_client.read_holding_registers(21, 1, unit=self.techno_slave_id)
+            self.floor_number = techno_response
+            # print("type =", type(techno_response))
+            # print((techno_response.registers[0]))
             return techno_response.registers[0] if not techno_response.isError() else -1
         finally:
             self.techno_client.close()
@@ -51,7 +55,7 @@ class TechnoModbusLiftController:
             return "unknown"
 
         try:
-            techno_response = self.techno_client.read_holding_registers(address=0x00017, count=2, unit=self.techno_slave_id)
+            techno_response = self.techno_client.read_holding_registers(address=17, count=2, unit=self.techno_slave_id)
             if techno_response.isError():
                 return "unknown"
 
@@ -76,10 +80,11 @@ class TechnoModbusLiftController:
             return "unknown"
 
         try:
-            techno_response = self.techno_client.read_holding_registers(address=0x00019, count=2, unit=self.techno_slave_id)
+            techno_response = self.techno_client.read_holding_registers(address=19, count=2, unit=self.techno_slave_id)
             if techno_response.isError():
                 return "unknown"
 
+            print("floor:", self.floor_number, techno_response.registers[0], techno_response.registers[1])
             techno_up_status = techno_response.registers[0]
             techno_down_status = techno_response.registers[1]
 
